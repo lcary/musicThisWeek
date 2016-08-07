@@ -148,3 +148,4 @@ class Event(object):
         self.date = datetime.strptime(self.date, "%Y-%m-%d  %H:%M:%S")
     def __repr__(self):
         return "Title: %r \nVenue: %r" % (self.title, self.venue_name)
+
