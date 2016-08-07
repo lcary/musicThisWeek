@@ -3,9 +3,6 @@ Main backend master that handles all the high level logic for execution.
 This keeps views.py lightweight.
 """
 
-#import sys
-#sys.path.append('/Users/edwardmason/github3/musicThisWeek/music_this_week_app/backend/')
-
 import eventFinder
 from spotifyHandler import SpotifySearcher
 

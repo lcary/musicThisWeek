@@ -10,7 +10,6 @@ In /setup, the user specifies serach args then presses the search button, which 
 After a playlist is created, it redirects to the playlist URL
 """
 
-#import sys
 
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
