@@ -93,6 +93,7 @@ class EventFinder(object):
     def parseDate(self, start, end):
         parsedDate = re.sub('-', '', start) + '00-' + re.sub('-','', end) +'00'
         return parsedDate
+        
     def sendRequest(self, endpoint):
         """Send the search query to Eventful"""
         print ("Sending request: " + endpoint)
