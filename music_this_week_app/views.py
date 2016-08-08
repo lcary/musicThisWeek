@@ -95,7 +95,7 @@ def search(request):
     search_args = dict(request.GET.items())
 
     #Validate search arguments
-    if "location" not in search_args.keys() or "date" not in search_args.keys() or "nResults" not in search_args.keys():
+    if "location" not in search_args.keys() or "start" not in search_args.keys() or "end" not in search_args.keys() or "nResults" not in search_args.keys():
         print("ERROR: Bad search arguments")
         print(search_args)
         resp = HttpResponse("Bad Search Arguments")
