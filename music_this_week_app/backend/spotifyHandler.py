@@ -37,13 +37,16 @@ class SpotifySearcher(object):
         artist_data = [self.filter_artist(a) +  (a,) for a in unfiltered_artists]
        # (URI, name) tuple pairs go in new_artist_data if they were not found in the DB
         new_artist_data = [ a[1:] for a in artist_data if not a[0] ]
-	print("New Artists found: " + str(new_artist_data)) 
+	if VERBOSE:
+		print("New Artists found: " + str(new_artist_data))
         artistURIs = [a[1] for a in artist_data if a[1]]
         if VERBOSE:
             print("\n%i of the %i artists were found on Spotify." % (len(artistURIs), len(unfiltered_artists)))
         if SAVE_ARTIST_URIS:
 		for new_artist_tuple in new_artist_data:
-			self.save_artist_uris(*new_artist_tuple);
+			#check URI not NONE before saving in DB
+			if new_artist_tuple[0]:
+				self.save_artist_uris(*new_artist_tuple)
         return artistURIs
 
     def filter_artist(self, artist_name):
@@ -57,7 +60,8 @@ class SpotifySearcher(object):
             print ("\nSearching for artist: " + artist_name)
         database_check = self.filter_artist_database(artist_name)
         if database_check: 
-            print("Found " + artist_name + "in db") if VERBOSE else None
+            print("Found " + artist_name + "in db") #if VERBOSE else None
+	    print(database_check)
             return (True, database_check)
         try:
             result = self.sp.search(q='artist:' + artist_name, type='artist')
@@ -132,7 +136,8 @@ class SpotifySearcher(object):
         :return None:
         """
         artist = Artist(spotify_uri = artist_uri, name = artist_name)
-        print("saving %s in DB"% artist_name)
+        if VERBOSE:
+		print("saving %s in DB"% artist_name)
         artist.save()
 	return None
 
