@@ -86,7 +86,10 @@ def setup(request):
         print("ERROR: setup called without pc session. Redirecting home.")
         return HttpResponseRedirect('/')
 
-    context = dict(pc.user_info, **{'location': request.session.get('location')} )
+    location = request.session.get('location')
+    if location is None:
+        location = 'San Francisco'
+    context = dict(pc.user_info, **{'location': location} )
     print(type(request.session.get('location')))
     return render(request, 'music_this_week/setup.html', context)
 
