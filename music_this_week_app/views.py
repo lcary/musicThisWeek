@@ -90,7 +90,6 @@ def setup(request):
     if location is None:
         location = 'San Francisco'
     context = dict(pc.user_info, **{'location': location} )
-    print(type(request.session.get('location')))
     return render(request, 'music_this_week/setup.html', context)
 
 def search(request):
@@ -98,15 +97,16 @@ def search(request):
     # Parse request for search arguments
     search_args = dict(request.GET.items())
 
-    request.session['location'] = search_args['location']
-    print
-    #Validate search arguments
+    # Validate search arguments
     if "location" not in search_args.keys() or "date" not in search_args.keys() or "nResults" not in search_args.keys():
         print("ERROR: Bad search arguments")
         print(search_args)
         resp = HttpResponse("Bad Search Arguments")
         resp.status_code = 400
         return resp
+
+    # Save user's location as a cookie for next time
+    request.session['location'] = search_args.get('location')
 
     # Load PlaylistCreator
     pc = request.session.get('pc')
