@@ -105,9 +105,6 @@ def search(request):
         resp.status_code = 400
         return resp
 
-    # Save user's location as a cookie for next time
-    request.session['location'] = search_args.get('location')
-
     # Load PlaylistCreator
     pc = request.session.get('pc')
     if pc is None:
@@ -124,5 +121,8 @@ def search(request):
         resp = HttpResponse(error)
         resp.status_code = 400
         return resp
+
+    # Save user's search location as a cookie for next time
+    request.session['location'] = search_args.get('location')
 
     return HttpResponseRedirect(url)
